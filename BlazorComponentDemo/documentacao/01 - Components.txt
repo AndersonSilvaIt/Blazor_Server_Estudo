@@ -1,0 +1,88 @@
+Compoonentes servem para reutilizar código em vários pontos do sistema.
+
+uma maneira, é criar um arquivo Component.Razor
+
+ex: 
+DateComponent.razor
+
+esse arquivo foi criado dentro da pasta Controls
+
+então no arquivo _Imports.razor, é necessário importar essa pasta pasra que esse componente seja utilizado em
+outras telas
+// dentro de _Imports.razor
+
+@using BlazorComponentDemo.Controls;
+
+@dateTimeNow.ToString("dd/mm/YYYY")
+
+// no código é criado a variável que será reutilizada em outras telas quando chamar esse component.
+@code {
+    DateTime dateTimeNow;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        dateTimeNow = DateTime.Now;
+    }
+}
+
+
+então no arquivo que quiser usar esse componente, basta usar
+
+<br />
+<DateComponent></DateComponent>
+<br />
+
+exemplo no arquivo SalesComponent.razor, que usa esse componente DateComponent
+
+
+outro modo de criar um componente, usando uma classe
+
+
+criado a pasta BaseComponents,
+dentro da pasta é criado o arquivo DateTimeBaseComponent
+
+também é necessário importar dentro do arquivo _Imports.razor
+
+@using BlazorComponentDemo.BaseComponents 
+
+    public class DateTimeBaseComponent : ComponentBase
+    {
+        public DateTime dateTime { get; set; }
+    }
+	
+o componente precisa ser herdado de ComponentBase
+
+dentro do arquivo que for usar esse componente, é necessário importar esse componente
+dentro do arquivo razor
+como exemplo: SalesComponent.razor
+
+@inherits DateTimeBaseComponent
+
+basta chamar a propriedade que precisa usar.
+
+Date: @dateTime 
+
+
+
+também é possível criar componentes com parâmetros para serem usados em vários outros arquivos,
+exemplo o componente TitleComponent
+
+<h3>Welcome to the @Department Department</h3>
+
+@code {
+
+    [Parameter]
+    public string Department { get; set; }
+
+}
+
+no código, é criado uma propriedade como o data annotations "Parameter"
+
+também é encessário importar a pasta desse aquivo no arquivo _Imports.razor
+
+no arquivo que irá usar esse componente, basta passar o parâmetro com o tótulo que deseja
+
+<TitleComponent Department="Sales"></TitleComponent>
+
