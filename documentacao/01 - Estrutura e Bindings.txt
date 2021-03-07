@@ -1,0 +1,61 @@
+Com o blazor é possível rodar código C# nattivo diretamente no Browser
+
+é possível criar classes e realizar bindings.
+
+bastando colocar a tag @code dentro do arquivo .razor
+
+@code
+{
+    IndexViewModel person = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        person = new IndexViewModel
+        {
+            SalesPerson = "Alex",
+            Amount = 1500,
+            Locations = new List<Location>()
+        {
+                new Location { Id = 1, City = "Toronto", ProvState="Ontario", Country = "Canada"},
+                new Location { Id = 2, City = "Montreal", ProvState="Quebec", Country = "Canada"}
+            }
+        };
+    }
+
+
+    class IndexViewModel
+    {
+        public string SalesPerson { get; set; }
+        public double Amount { get; set; }
+        public bool IsActive { get; set; }
+        public List<Location> Locations;
+    }
+
+    class Location
+    {
+        public int Id { get; set; }
+        public string City { get; set; }
+        public string ProvState { get; set; }
+        public string Country { get; set; }
+    }
+}
+
+para obter o valor das propriedades da classe no HTML, basta informar
+
+@peson.propriedade
+
+ex:  <p>Name: @person.SalesPerson</p>
+
+para realizar o binding: <p><input type="number" @bind-value="person.Amount" /></p>
+existe a opção @binding-value e passando a propriedade da classe que irá ser bindável
+
+porém desse primeiro modo, usando somente o @binding-value, só irá de fato trocar o valor da propriedade, quando
+realizar o blur do componente atual, ou seja, quando perder o foco do campo de texto por exemplo
+
+
+para realizar o binding automaticamente após mudar o valor no campo de texto, 
+basta informar o evento no binding
+
+@binding-value:event="oninput"
