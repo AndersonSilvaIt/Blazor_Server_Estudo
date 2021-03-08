@@ -1,0 +1,22 @@
+﻿@page "/counter"
+
+<h3>ParentComponent</h3>
+
+<p>
+    Current Count: @currentCount
+</p>
+
+<Counter SetCurrentCount="SetCurrentCount" ></Counter>
+@*<Counter SetCount="SetCurrentCount"></Counter> Isso não funciona, não é um eventCallback *@
+
+
+@code {
+
+    private int currentCount;
+
+    private void SetCurrentCount(int value)
+    {
+        currentCount = value;
+    }
+
+}

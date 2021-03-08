@@ -1,21 +1,32 @@
-﻿@page "/counter"
+﻿<h1>Counter</h1>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-<br />
+@*<br />
 <br />
 <CascadingValue Name="Counter" Value="@currentCount">
     <CascadingValue Name="TitleColor" Value="@("blue")" IsFixed="true">
         <Component1></Component1>
     </CascadingValue>
 </CascadingValue>
+*@
+
 
 
 @code {
+    [Parameter]
+    public EventCallback<int> SetCurrentCount { get; set; }
+
+    [Parameter]
+    public Action<int> SetCount { get; set; }
+
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+        SetCurrentCount.InvokeAsync(currentCount);
+        //SetCount.Invoke(currentCount); isso não funciona, precisa ser um EventCallBack
+
     }
 }
