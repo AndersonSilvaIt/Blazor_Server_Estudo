@@ -1,0 +1,5 @@
+é criado um componente específico para input junto com label]
+
+FieldComponent
+
+necessário importar a pasta do arquivo importado em "_Imports.razor"
