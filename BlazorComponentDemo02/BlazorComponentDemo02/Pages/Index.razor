@@ -6,7 +6,8 @@ Welcome to your new app.
 
 <br />
 <br />
-
+@*
+    Componentes unitários, texto e Label
 <FieldComponent Label="Name">
     <Control>
         <input class="input" type="email" placeholder="Name" />
@@ -23,4 +24,34 @@ Welcome to your new app.
     <Control>
         <input class="input" type="email" placeholder="Department" />
     </Control>
-</FieldComponent>
+</FieldComponent>*@
+
+<GridAutoComponent Items="emplyees"
+                   CssClass="is-striped is-hoverable"
+                   ColumnsToExcludeCSV="Id">
+</GridAutoComponent>
+
+@code
+{ 
+    private List<Employee> emplyees;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        emplyees = new List<Employee>();
+
+        emplyees.AddRange(new Employee[3] {
+            new Employee{ Id = 1, Name = "John Doe", Title = "Developer", Department = "Dev"},
+            new Employee{ Id = 2, Name = "Jane Doe", Title = "Developer", Department = "Dev"},
+            new Employee{ Id = 3, Name = "Jeff Thomas", Title = "Developer", Department = "Dev"}
+        });
+    }
+
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Department { get; set; }
+    }
+ }

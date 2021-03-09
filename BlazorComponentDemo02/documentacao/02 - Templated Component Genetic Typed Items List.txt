@@ -1,0 +1,15 @@
+criado o componente genérico para criar a grid
+
+GridAutoComponent usndo reflection para obter os membros da classe usada
+nesse componente é criado uma propriedade com o dataannotation Parameter", que será usado
+para fazer o bind da lista
+
+
+no arquivo onde será implementado, no caso a Index, é criado a lista preendo os valores
+que irão mostrar na grid
+
+
+no arquivo index, é usado essa grid, e no parâmetro, é informado a lista no parametro
+
+<GridAutoComponent Items="emplyees">
+</GridAutoComponent>
