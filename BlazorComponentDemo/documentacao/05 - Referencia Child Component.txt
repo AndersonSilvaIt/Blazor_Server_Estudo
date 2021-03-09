@@ -1,0 +1,45 @@
+Para trocar os dados de um componente filho, por exemplo:
+
+Child component tem um label, e o pai quer trocar.
+
+Componente Filho:
+
+@if (display)
+{
+    <h3>ChildComponent</h3>
+}
+
+
+@code {
+
+    private bool display;
+
+    public void Show()
+    {
+        this.display = true;
+        StateHasChanged();
+    }
+
+}
+
+esse elemento "display" será troca quando o pai desse elemento invocar o método "Show()",
+porém também é necessário chamar o StateHasChanged();, para fazer tipo o "load" novamente da página.
+
+
+no componente pai:
+
+<br />
+<button class="btn" @onclick="(()=> 
+                                {
+                                     child.Show();
+                                 })"> Show Child Component</button>
+<ChildComponent @ref="child"></ChildComponent>
+
+é informado o componente filho usado, 
+é na parte do código, também é preciso criar uma propriedade do filho
+
+private ChildComponent child;
+
+implementado o framework css bulma.css
+
+também implementado  a caixa de diálogo modal

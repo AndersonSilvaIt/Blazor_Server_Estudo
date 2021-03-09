@@ -1,32 +1,62 @@
-﻿<h1>Counter</h1>
+﻿@page "/counter"
+<h1>Counter</h1>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-@*<br />
+@*
+        Componente Filho
+    <br />
+    <button class="button" @onclick="(()=>
+                                        {
+                                             child.Show();
+                                         })">
+        Show Child Component
+    </button>
+    <ChildComponent @ref="child"></ChildComponent>*@
+
+
+
+        @*Componente Filho*@
 <br />
-<CascadingValue Name="Counter" Value="@currentCount">
-    <CascadingValue Name="TitleColor" Value="@("blue")" IsFixed="true">
-        <Component1></Component1>
+<button class="button" @onclick="(()=>
+                                        {
+                                             dialog.Show();
+                                         })">
+    Show Dialog
+</button>
+<DialogComponent @ref="dialog"></DialogComponent>
+
+@*
+    Passando o valor para os componentes filhos
+    <br />
+    <br />
+    <CascadingValue Name="Counter" Value="@currentCount">
+        <CascadingValue Name="TitleColor" Value="@("blue")" IsFixed="true">
+            <Component1></Component1>
+        </CascadingValue>
     </CascadingValue>
-</CascadingValue>
 *@
 
-
-
 @code {
-    [Parameter]
+    /*[Parameter]
     public EventCallback<int> SetCurrentCount { get; set; }
 
     [Parameter]
     public Action<int> SetCount { get; set; }
+
+    */
+
+    //Referência de Component Filho
+    private ChildComponent child;
+
+    private DialogComponent dialog;
 
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
-        SetCurrentCount.InvokeAsync(currentCount);
-        //SetCount.Invoke(currentCount); isso não funciona, precisa ser um EventCallBack
-
     }
+
+
 }
