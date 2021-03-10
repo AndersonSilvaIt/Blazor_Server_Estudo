@@ -1,0 +1,27 @@
+No arquivo Index, é implementado a DI
+
+@page "/"
+@inject ICustomerService CustService
+@implements IDisposable 
+
+<br />
+    CustomerService ID: @CustService.Uid
+    <br />
+
+    Customer Name: @customer.Name;
+
+
+services.AddTransient<ICustomerService, CustomerService>();
+
+O Transient: em cada chamada na tela, é criado uma instância de ICustomerService,
+caso rodar o programa,  cada chamada o ID muda CustService.Uid,
+isso devido implementar o Dispose, quando clica em outra tela, ele destrói esse objeto.
+
+services.AddSingleton<ICustomerService, CustomerService>();
+
+o AddSingleton  não troca, ele fica estático para todas as páginas, mesmo se der
+o refresh da páginas
+
+services.AddScoped<ICustomerService, CustomerService>();
+
+o AddScoped troca o ID somente quando é realizado o refresh na página.

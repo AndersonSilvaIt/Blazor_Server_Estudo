@@ -1,7 +1,36 @@
 ﻿@page "/"
+@inject ICustomerService CustService
+
+@implements IDisposable
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<br />
+    CustomerService ID: @CustService.Uid
+    <br />
+
+    Customer Name: @customer.Name;
+
+
+    @code
+{
+        //CustomerService customerService = new CustomerService();
+        private Customer customer;
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            if (customer == null)
+            {
+                customer = CustService.GetCustomerById(1);
+            }
+        }
+
+        public void Dispose()
+        {
+
+        }
+
+    }
