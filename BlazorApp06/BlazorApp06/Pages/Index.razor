@@ -4,4 +4,71 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<br />
+<br />
+
+<RepeateComponent @ref="repeater"
+                  Items="customers">
+    <Header>
+        <h2>Customer</h2>
+    </Header>
+    <Row Context="customer">
+        <div>
+            @customer.CompanyName
+            &nbsp;
+            <button class="btn" @onclick="@(() => {
+
+                                                EditCustomer(customer);
+                                            })">
+                Edit
+            </button>
+        </div>
+        <div class="ml-5">@customer.ContactName</div>
+        <div class="ml-5">@customer.PhoneNumber</div>
+        <br />
+    </Row>
+    <EditTemplate Context="currentCustomer">
+        <div>
+            <text>Company Name:</text><input class="form-control" @bind-value="currentCustomer.CompanyName" />
+        </div>
+        <div>
+            <text>Contact Name:</text><input class="form-control" @bind-value="currentCustomer.ContactName" />
+        </div>
+        <div>
+            <text>Phone Number:</text><input class="form-control" @bind-value="currentCustomer.PhoneNumber" />
+        </div>
+    </EditTemplate>
+</RepeateComponent>
+
+@code
+{
+    private RepeateComponent<Customer> repeater;
+    private List<Customer> customers;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        customers = new List<Customer>();
+
+        customers.AddRange(new Customer[]
+        {
+            new Customer{ CompanyName = "ABC Company", ContactName = "Frank Liu", PhoneNumber = "111-12345"},
+            new Customer{ CompanyName = "DEF Company", ContactName = "Thomas Fran", PhoneNumber = "222-12345"},
+            new Customer{ CompanyName = "GHI Company", ContactName = "John Doe", PhoneNumber = "333-12345"},
+            });
+
+    }
+
+    private void EditCustomer(Customer customer)
+    {
+        repeater.ItemToEdit = customer;
+    }
+
+    class Customer
+    {
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+}
