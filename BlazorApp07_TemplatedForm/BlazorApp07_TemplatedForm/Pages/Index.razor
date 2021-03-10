@@ -4,4 +4,65 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<RepeaterComponent @ref="repeater" 
+                   Items="customers">
+    <Header>
+        <h2>Customers</h2>
+    </Header>
+    <Row Context="customer">
+        <div>
+            <b>@customer.CompanyName</b>
+            &nbsp;
+            <button class="btn" @onclick="@(() => {
+                                                EditCustomer(customer);
+                                            })">
+                Edit
+            </button>
+        </div>
+        <div class="ml-5">@customer.ContactName</div>
+        <div class="ml-5">@customer.PhoneNumber</div>
+        <br />
+    </Row>
+    <EditTemplate Context="currentCustomer">
+        <div>
+            <tex>Company Name:</tex> <input class="form-control" @bind-value="currentCustomer.CompanyName" />
+        </div>
+        <div>
+            <tex>Contact Name:</tex> <input class="form-control" @bind-value="currentCustomer.ContactName" />
+        </div>
+        <div>
+            <tex>Phone Number:</tex> <input class="form-control" @bind-value="currentCustomer.PhoneNumber" />
+        </div>
+    </EditTemplate>
+</RepeaterComponent>
+
+@code
+{
+    private RepeaterComponent<Customer> repeater;
+    private List<Customer> customers;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        customers = new List<Customer>();
+        customers.AddRange(new Customer[]
+        {
+            new Customer { CompanyName = "ABC Company", ContactName = "Frank Li", PhoneNumber = "111-111"},
+            new Customer { CompanyName = "DEF Company", ContactName = "Thomas Trais", PhoneNumber = "222-222"},
+            new Customer { CompanyName = "GHI Company", ContactName = "John Doe", PhoneNumber = "333-3333"}
+            });
+    }
+
+    private void EditCustomer(Customer customer)
+    {
+        repeater.ItemToEdit = customer;
+    }
+
+    class Customer
+    {
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+}
