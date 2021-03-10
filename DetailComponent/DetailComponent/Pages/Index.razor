@@ -4,4 +4,25 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<EmplyeeDetailComponent Employee="employee">
+
+</EmplyeeDetailComponent>
+
+@code {
+    private int currentCount = 0;
+
+    private Emplyee employee;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            employee = new Emplyee
+            {
+                Name = "John Doe",
+                Title = "Developer",
+                Department = "Software Development"
+            };
+        });
+    }
+}
